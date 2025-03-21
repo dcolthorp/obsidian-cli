@@ -7,6 +7,20 @@ import (
 	"strings"
 )
 
+// NormalizePath standardizes paths for comparison
+func NormalizePath(path string) string {
+	// Convert to standard slash notation
+	normalized := filepath.ToSlash(path)
+	
+	// Remove .md extension if present
+	normalized = strings.TrimSuffix(normalized, ".md")
+	
+	// Remove leading and trailing slashes
+	normalized = strings.Trim(normalized, "/")
+	
+	return normalized
+}
+
 func AddMdSuffix(str string) string {
 	if !strings.HasSuffix(str, ".md") {
 		return str + ".md"
