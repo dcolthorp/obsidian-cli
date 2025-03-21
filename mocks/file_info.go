@@ -3,33 +3,40 @@ package mocks
 import (
 	"os"
 	"time"
+
+	"github.com/stretchr/testify/mock"
 )
 
-type MockFileInfo struct {
-	FileName    string
-	IsDirectory bool
+type FileInfo struct {
+	mock.Mock
 }
 
-func (fi *MockFileInfo) Name() string {
-	return fi.FileName
+func (m *FileInfo) Name() string {
+	args := m.Called()
+	return args.String(0)
 }
 
-func (fi *MockFileInfo) Size() int64 {
-	return 0
+func (m *FileInfo) Size() int64 {
+	args := m.Called()
+	return args.Get(0).(int64)
 }
 
-func (fi *MockFileInfo) Mode() os.FileMode {
-	return 0
+func (m *FileInfo) Mode() os.FileMode {
+	args := m.Called()
+	return args.Get(0).(os.FileMode)
 }
 
-func (fi *MockFileInfo) ModTime() time.Time {
-	return time.Now()
+func (m *FileInfo) ModTime() time.Time {
+	args := m.Called()
+	return args.Get(0).(time.Time)
 }
 
-func (fi *MockFileInfo) IsDir() bool {
-	return fi.IsDirectory
+func (m *FileInfo) IsDir() bool {
+	args := m.Called()
+	return args.Bool(0)
 }
 
-func (fi *MockFileInfo) Sys() interface{} {
-	return nil
+func (m *FileInfo) Sys() interface{} {
+	args := m.Called()
+	return args.Get(0)
 }
